@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "author": "slightlyfunctional",
-  "license": "GPL-3.0-or-later", 
+  "license": "GPL-3.0-or-later",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -12,6 +12,7 @@
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^2.0.2",
+    "modern-css-reset": "^1.4.0",
     "svelte": "^3.55.1",
     "vite": "^4.1.0"
   },
