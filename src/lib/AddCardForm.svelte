@@ -2,45 +2,55 @@
 	import { createEventDispatcher } from 'svelte';
 
 	const dispatch = createEventDispatcher();
+  
+  function handleCardNumber (e) { // e.key === ' ' ||
+    if (e.keyCode !== 8 && e.key !== ' ' && (e.keyCode < 48 || e.keyCode > 57)) {
+      e.preventDefault();
+    }
+  }
 
-  let cardholderName = '';
-  let cardNumber = '';
-  let cardExpirationMo = '';
-  let cardExpirationYr = '';
+  function handleInput (field) {
+    return function (e) {
+      dispatch('update', {
+        [field]: e.target.value
+      })
+    };
+  }
 
   function handleSubmit (e) {
-    e.preventDefault();
-    dispatch('submitted');
+    dispatch('validate');
   }
+
+  // $: cardNumberFormatted = cardNumber.replace(/(.{4})/g, '$1 ').trim();
 </script>
 
-<form class="card__form">
+<form class="card__form" on:submit|preventDefault={handleSubmit}>
   <div class="card__field">
     <label for="cardholder-name" class="card__label">Cardholder Name</label>
-    <input type="text" id="cardholder-name" class="card__input" name="cardholder-name" placeholder="e.g. Jane Appleseed" min="3" max="64" bind:value={cardholderName} />
+    <input type="text" id="cardholder-name" class="card__input" name="cardholder-name" placeholder="e.g. Jane Appleseed" min="3" max="64" on:input={handleInput('cardholderName')} required />
   </div>
   
   <div class="card__field">
     <label for="card-number" class="card__label">Card Number</label>
-    <input type="text" id="card-number" class="card__input" name="card-number" pattern="/^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/" placeholder="e.g. 1234 5678 9123 0000" bind:value={cardNumber} />
+    <input type="text" id="card-number" class="card__input" name="card-number" min="20" max="20" placeholder="e.g. 1234 5678 9123 0000" on:keydown={handleCardNumber} on:input={handleInput('cardNumber')} required />
   </div>
 
   <div class="card__field card__field--display-row">
     <div class="card__field">
       <label for="card-expiration" class="card__label">Exp. Date (MM/YY)</label>
       <div class="card__field--display-row">
-        <input type="number" id="card-expiration-mo" class="card__input card__input--size-sm" placeholder="MM" />
-        <input type="number" id="card=expiration-yr" class="card__input card__input--size-sm" placeholder="YY" />
+        <input type="text" id="card-expiration-mo" class="card__input card__input--size-sm" on:input={handleInput('cardExpMo')} placeholder="MM" required />
+        <input type="text" id="card=expiration-yr" class="card__input card__input--size-sm" on:input={handleInput('cardExpYr')} placeholder="YY" required />
       </div>
     </div>
     
     <div class="card__field">
       <label for="card-cvc" class="card__label">CVC</label>
-      <input type="number" id="card-cvc" class="card__input card__input--size-sm" name="card-cvc" placeholder="e.g. 123" />
+      <input type="number" id="card-cvc" class="card__input card__input--size-sm" name="card-cvc" placeholder="e.g. 123" min="100" max="1000" on:input={handleInput('cvc')} required />
     </div>
   </div>
 
-  <button type="submit" class="card__submit" on:click={handleSubmit}>Confirm</button>
+  <button type="submit" class="card__submit">Confirm</button>
 </form>
 
 <style>
@@ -55,8 +65,12 @@
 
   .card__label {
     width: 100%;
-    margin-bottom: 3px;
+    margin-bottom: 5px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
     color: hsl(278, 68%, 11%); 
+    text-transform: uppercase;
   }
 
   .card__field {

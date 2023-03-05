@@ -1,18 +1,27 @@
 <script>
+  export let cardholderName = 'Jane Appleseed';
+  export let cardNumber = '0000 0000 0000 0000';
+  export let cardExpMo = '00';
+  export let cardExpYr = '00';
+  export let cardCvc = '000';
 </script>
 
 <div class="card__preview">
   <div class="card__container card__container--shift-right">
     <div class="card__back">
-      <p class="card__cvc">000</p>
+      <p class="card__cvc">{cardCvc}</p>
     </div>
   </div>
   <div class="card__container card__container--shift-left">
     <div class="card__front">
       <img class="card__logo" src="./src/assets/images/card-logo.svg" alt="card logo" />
-      <p>0000 0000 0000 0000</p>
-      <p>Jane Appleseed</p>
-      <p>00/00</p>
+      <div>
+        <p class="card__number">{cardNumber}</p>
+        <div class="card__details">
+          <p>{cardholderName}</p>
+          <p>{cardExpMo}/{cardExpYr}</p>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -23,6 +32,7 @@
     background-repeat: no-repeat;
     height: 300px;
     width: 23.5rem;
+    margin-bottom: 15px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -40,19 +50,35 @@
     justify-content: end;
   }
 
+  .card__details {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-size: 0.65rem;
+    color: hsl(270, 3%, 87%);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
   .card__front {
     background-image: url('../assets/images/bg-card-front.png');
     background-repeat: no-repeat;
     background-size: contain;
     height: 150px;
     width: 276px;
-    margin-top: -50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: -64.5px;
     margin-left: 15px;
     padding-top: 15px;
     padding-bottom: 15px;
-    padding-left: 25px;
-    padding-right: 25px;
+    padding-left: 20px;
+    padding-right: 20px;
     color: hsl(0, 0%, 100%);
+    letter-spacing: 0.15em;
   }
 
   .card__back {
@@ -74,7 +100,14 @@
     width: 50px;
   }
 
+  .card__number {
+    font-size: 1.05rem;
+    font-weight: 500;
+  }
+
   .card__cvc {
     text-align: right;
+    font-size: 0.6rem;
+    margin-top: -5px;
   }
 </style>
