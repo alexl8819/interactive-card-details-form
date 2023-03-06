@@ -1,7 +1,7 @@
 <script>
   import { createEventDispatcher } from 'svelte';
 
-	const dispatch = createEventDispatcher();
+  const dispatch = createEventDispatcher();
   
   const FullNameRegex = /^[A-Za-z]{2,}\s{1}[A-Za-z]{2,}$/;
   const NaiveCCRegex = /^[0-9]{4}\s{1}[0-9]{4}\s{1}[0-9]{4}\s{1}[0-9]{4}$/;
