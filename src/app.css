@@ -23,12 +23,6 @@
   min-height: 100vh;
 }
 
-@media screen and (min-width: 1023px) {
-  .container {
-    flex-direction: row;
-  }
-}
-
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

@@ -1,16 +1,49 @@
 <script>
-	import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher } from 'svelte';
 
 	const dispatch = createEventDispatcher();
   
-  function handleCardNumber (e) { // e.key === ' ' ||
-    if (e.keyCode !== 8 && e.key !== ' ' && (e.keyCode < 48 || e.keyCode > 57)) {
+  const FullNameRegex = /^[A-Za-z]{2,}\s{1}[A-Za-z]{2,}$/;
+  const NaiveCCRegex = /^[0-9]{4}\s{1}[0-9]{4}\s{1}[0-9]{4}\s{1}[0-9]{4}$/;
+  const RealCCRegex = /^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/;
+  const ExpDateRegex = /^(0[1-9]|1[0-2])\/?([0-9]{4}|[0-9]{2})$/;
+  const CVVRegex = /^[0-9]{3,4}$/;
+  
+  function handleCardNumber (e) {
+    if (e.keyCode !== 37 && e.keyCode !== 39 && e.keyCode !== 8 && e.key === 'Tab' && e.key !== ' ' && (e.keyCode < 48 || e.keyCode > 57)) {
+      e.preventDefault();
+    } else if (e.target.value.length >= 19 && e.keyCode !== 37 && e.keyCode !== 39 && e.keyCode !== 8 && e.key === 'Tab' && e.keyCode !== ' ') {
+      e.preventDefault();
+    }
+  }
+
+  function handleCardCvv (e) {
+    if (e.keyCode !== 37 && e.keyCode !== 39 && e.keyCode !== 8 && e.keyCode !== ' ' && e.code.includes('Key')) {
+      e.preventDefault();
+    } else if (e.target.value.length >= 4 && e.keyCode !== 37 && e.keyCode !== 39 && e.keyCode !== 8 && e.keyCode !== ' ') {
       e.preventDefault();
     }
   }
 
   function handleInput (field) {
     return function (e) {
+      switch (field) {
+        case 'cardholderName':
+          cardholderNameActivated = true;
+          break;
+        case 'cardNumber':
+          cardNumberActivated = true;
+          break;
+        case 'cardExpMo':
+          cardExpMoActivated = true;
+          break;
+        case 'cardExpYr':
+          cardExpYrActivated = true;
+          break;
+        case 'cardCvv':
+          cardCvvActivated = true;
+          break;
+      }
       dispatch('update', {
         [field]: e.target.value
       })
@@ -18,46 +51,97 @@
   }
 
   function handleSubmit (e) {
-    dispatch('validate');
+    dispatch('confirm');
   }
 
-  // $: cardNumberFormatted = cardNumber.replace(/(.{4})/g, '$1 ').trim();
+  let cardholderNameActivated = false;
+  let cardholderName = '';
+
+  $: isValidCardholderName = !cardholderNameActivated || cardholderNameActivated && cardholderName.length;
+  $: isValidCardholderNameFormat = !cardholderNameActivated || cardholderNameActivated && cardholderName.length >= 3 && FullNameRegex.test(cardholderName);
+
+  let cardNumberActivated = false;
+  let cardNumber = '';
+
+  $: isValidCardNumber = !cardNumberActivated || cardNumberActivated && cardNumber.length;
+  $: isValidCardNumberFormat = !cardNumberActivated || cardNumberActivated && cardNumber.length === 19 && NaiveCCRegex.test(cardNumber);
+  $: isRealCardNumberFormat = !cardNumberActivated || cardNumberActivated && RealCCRegex.test(cardNumber.replace(/\s/g, ''));
+
+  let cardExpMoActivated = false;
+  let cardExpMo = '';
+  let cardExpYrActivated = false;
+  let cardExpYr = '';
+
+  $: isValidExpMo = !cardExpMoActivated || cardExpMoActivated && cardExpMo.length;
+  $: isValidExpYr = !cardExpYrActivated || cardExpYrActivated && cardExpYr.length;
+  $: isValidExpDate = !cardExpMoActivated && !cardExpYrActivated || cardExpMoActivated && cardExpYrActivated && ExpDateRegex.test(`${cardExpMo}/${cardExpYr}`);
+
+  let cardCvvActivated = false;
+  let cardCvv;
+
+  $: isValidCardCvv = !cardCvvActivated || cardCvvActivated && cardCvv > 0;
+  $: isValidCardCvvFormat = !cardCvvActivated || cardCvvActivated && CVVRegex.test(cardCvv);
+
+  $: isValidCardEntry = cardholderNameActivated && isValidCardholderName && cardNumberActivated && isValidCardholderNameFormat && isValidCardNumber && isValidCardNumberFormat && cardExpMoActivated && cardExpYrActivated && isValidExpMo && isValidExpYr && isValidExpDate && cardCvvActivated && isValidCardCvv && isValidCardCvvFormat;
 </script>
 
 <form class="card__form" on:submit|preventDefault={handleSubmit}>
   <div class="card__field">
     <label for="cardholder-name" class="card__label">Cardholder Name</label>
-    <input type="text" id="cardholder-name" class="card__input" name="cardholder-name" placeholder="e.g. Jane Appleseed" min="3" max="64" on:input={handleInput('cardholderName')} required />
+    <input type="text" id="cardholder-name" class="card__input" name="cardholder-name" placeholder="e.g. Jane Appleseed" min="3" max="64" on:input={handleInput('cardholderName')} bind:value={cardholderName} required />
+    {#if !isValidCardholderName}
+      <p class="field__feedback field__feedback--state-error">Error: Name cannot be empty</p>
+    {:else if !isValidCardholderNameFormat}
+      <p class="field__feedback field__feedback--state-error">Error: You must enter your full name</p>
+    {/if}
   </div>
-  
+
   <div class="card__field">
     <label for="card-number" class="card__label">Card Number</label>
-    <input type="text" id="card-number" class="card__input" name="card-number" min="20" max="20" placeholder="e.g. 1234 5678 9123 0000" on:keydown={handleCardNumber} on:input={handleInput('cardNumber')} required />
+    <input type="text" id="card-number" class="card__input" name="card-number" min="19" max="19" placeholder="e.g. 1234 5678 9123 0000" on:keydown={handleCardNumber} on:input={handleInput('cardNumber')} bind:value={cardNumber} required />
+    {#if !isValidCardNumber}
+      <p class="field__feedback field__feedback--state-error">Error: Card number cannot be empty</p> 
+    {:else if !isValidCardNumberFormat}
+      <p class="field__feedback field__feedback--state-error">Error: Card number must be 16 digits</p>
+    {:else if !isRealCardNumberFormat}
+      <p class="field__feedback field__feedback--state-warning">Warning: Not a real card number</p>
+    {/if}
   </div>
 
   <div class="card__field card__field--display-row">
     <div class="card__field">
       <label for="card-expiration" class="card__label">Exp. Date (MM/YY)</label>
       <div class="card__field--display-row">
-        <input type="text" id="card-expiration-mo" class="card__input card__input--size-sm" on:input={handleInput('cardExpMo')} placeholder="MM" required />
-        <input type="text" id="card=expiration-yr" class="card__input card__input--size-sm" on:input={handleInput('cardExpYr')} placeholder="YY" required />
+        <input type="text" id="card-expiration-mo" class="card__input card__input--size-sm" on:input={handleInput('cardExpMo')} placeholder="MM" bind:value={cardExpMo} required />
+        <input type="text" id="card=expiration-yr" class="card__input card__input--size-sm" on:input={handleInput('cardExpYr')} placeholder="YY" bind:value={cardExpYr} required />
       </div>
+      {#if !isValidExpMo}
+        <p class="field__feedback field__feedback--state-error">Error: Exp Month cannot be empty</p>
+      {:else if !isValidExpYr}
+        <p class="field__feedback field__feedback--state-error">Error: Exp Year cannot be empty</p>
+      {:else if !isValidExpDate}
+        <p class="field__feedback field__feedback--state-error">Error: Invalid expiration date</p>
+      {/if}
     </div>
     
     <div class="card__field">
-      <label for="card-cvc" class="card__label">CVC</label>
-      <input type="number" id="card-cvc" class="card__input card__input--size-sm" name="card-cvc" placeholder="e.g. 123" min="100" max="1000" on:input={handleInput('cvc')} required />
+      <label for="card-cvv" class="card__label">CVV</label>
+      <input type="number" id="card-cvv" class="card__input card__input--size-md" name="card-cvv" placeholder="e.g. 123" on:keydown={handleCardCvv} on:input={handleInput('cvv')} bind:value={cardCvv} required />
+      {#if !isValidCardCvv}
+        <p class="field__feedback field__feedback--state-error">Error: Cannot be empty</p>
+      {:else if !isValidCardCvvFormat}
+        <p class="field__feedback field__feedback--state-error">Error: Invalid CVV format</p>
+      {/if}
     </div>
   </div>
 
-  <button type="submit" class="card__submit">Confirm</button>
+  <button type="submit" class="card__submit" disabled={!isValidCardEntry}>Confirm</button>
 </form>
 
 <style>
   .card__form {
     display: flex;
     flex-direction: column;
-    width: 23.5rem;
     padding-top: 10px;
     padding-left: 20px;
     padding-right: 20px;  
@@ -79,6 +163,14 @@
     margin-bottom: 15px;
   }
 
+  .card__field input[type=number]::-webkit-inner-spin-button, 
+  .card__field input[type=number]::-webkit-outer-spin-button,
+  .card__field input[type=number] { 
+    -webkit-appearance: none;
+    -moz-appearance: textfield; 
+    margin: 0;
+  }
+
   .card__field--display-row {
     display: flex;
     flex-direction: row;
@@ -93,19 +185,44 @@
     border-radius: 8px;
     border: 1px solid hsl(270, 3%, 87%);
     min-height: 30px;
-    max-width: 100%;
+  }
+
+  .card__input--size-md {
+    width: 150px;
   }
 
   .card__input--size-sm {
-    width: 100px;
+    width: 85px;
+  }
+
+  .card__input--size-sm:last-child {
+    margin-left: 8px;
+    margin-right: 8px;
   }
 
   .card__submit {
+    cursor: pointer;
     background-color: hsl(278, 68%, 11%);
     color: hsl(270, 3%, 87%);
     padding-top: 10px;
     padding-bottom: 10px;
     border-radius: 8px;
     border: none;
+  }
+
+  .card__submit:disabled {
+    cursor: not-allowed;
+  }
+
+  .field__feedback {
+    margin-top: 1px;
+  }
+
+  .field__feedback--state-error {
+    color: hsl(0, 100%, 66%);
+  }
+
+  .field__feedback--state-warning {
+    color: #AC4FC6;
   }
 </style>

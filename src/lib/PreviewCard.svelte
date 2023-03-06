@@ -3,13 +3,13 @@
   export let cardNumber = '0000 0000 0000 0000';
   export let cardExpMo = '00';
   export let cardExpYr = '00';
-  export let cardCvc = '000';
+  export let cardCvv = '000';
 </script>
 
 <div class="card__preview">
   <div class="card__container card__container--shift-right">
     <div class="card__back">
-      <p class="card__cvc">{cardCvc}</p>
+      <p class="card__cvv">{cardCvv}</p>
     </div>
   </div>
   <div class="card__container card__container--shift-left">
@@ -31,7 +31,6 @@
     background-image: url('../assets/images/bg-main-mobile.png');
     background-repeat: no-repeat;
     height: 300px;
-    width: 23.5rem;
     margin-bottom: 15px;
     display: flex;
     flex-direction: column;
@@ -105,9 +104,16 @@
     font-weight: 500;
   }
 
-  .card__cvc {
+  .card__cvv {
     text-align: right;
     font-size: 0.6rem;
     margin-top: -5px;
+  }
+
+  @media screen and (min-width: 1023px) {
+    .card__preview {
+      background-image: url('../assets/images/bg-main-desktop.png');
+      height: 100%;
+    }
   }
 </style>
