@@ -4,16 +4,23 @@
   import PreviewCard from './lib/PreviewCard.svelte';
 
   function handleUpdate ({ detail }) {
-    if (detail.cvv) {
-      cardCvv = detail.cvv;
-    } else if (detail.cardNumber) {
-      cardNumber = detail.cardNumber;
-    } else if (detail.cardholderName) {
-      cardholderName = detail.cardholderName;
-    } else if (detail.cardExpMo) {
-      cardExpMo = detail.cardExpMo;
-    } else if (detail.cardExpYr) {
-      cardExpYr = detail.cardExpYr;
+    const field = Object.keys(detail)[0];
+    switch (field) {
+      case 'cvv':
+        cardCvv = detail.cvv;
+        break;
+      case 'cardNumber':
+        cardNumber = detail.cardNumber;
+        break;
+      case 'cardholderName':
+        cardholderName = detail.cardholderName;
+        break;
+      case 'cardExpMo':
+        cardExpMo = detail.cardExpMo;
+        break;
+      case 'cardExpYr':
+        cardExpYr = detail.cardExpYr;
+        break;
     }
   }
 

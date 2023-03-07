@@ -113,7 +113,8 @@
   @media screen and (min-width: 1023px) {
     .card__preview {
       background-image: url('../assets/images/bg-main-desktop.png');
-      height: 100%;
+      min-height: 100vh;
+      width: 100%;
     }
   }
 </style>
