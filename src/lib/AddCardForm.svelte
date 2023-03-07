@@ -8,14 +8,6 @@
   const RealCCRegex = /^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/;
   const ExpDateRegex = /^(0[1-9]|1[0-2])\/?([0-9]{4}|[0-9]{2})$/;
   const CVVRegex = /^[0-9]{3,4}$/;
-  
-  function handleCardNumber (e) {
-    if (e.keyCode !== 37 && e.keyCode !== 39 && e.keyCode !== 8 && e.key !== ' ' && (e.keyCode < 48 || e.keyCode > 57)) {
-      e.preventDefault();
-    } else if (e.target.value.length >= 19 && e.keyCode !== 37 && e.keyCode !== 39 && e.keyCode !== 8 && e.keyCode !== ' ') {
-      e.preventDefault();
-    }
-  }
 
   function handleCardNumberField (limit = 4) {
     return (e) => {
@@ -90,9 +82,9 @@
 <form class="card__form" on:submit|preventDefault={handleSubmit}>
   <div class="card__field">
     <label for="cardholder-name" class="card__label">Cardholder Name</label>
-    <input type="text" id="cardholder-name" class="card__input" name="cardholder-name" placeholder="e.g. Jane Appleseed" min="3" max="64" on:input={handleInput('cardholderName')} bind:value={cardholderName} required />
+    <input type="text" id="cardholder-name" class={!isValidCardholderName || !isValidCardholderNameFormat ? "card__input card__input--state-error" : "card__input"} name="cardholder-name" placeholder="e.g. Jane Appleseed" min="3" max="64" on:input={handleInput('cardholderName')} bind:value={cardholderName} required />
     {#if !isValidCardholderName}
-      <p class="field__feedback field__feedback--state-error">Error: Name cannot be empty</p>
+      <p class="field__feedback field__feedback--state-error">Can't be blank</p>
     {:else if !isValidCardholderNameFormat}
       <p class="field__feedback field__feedback--state-error">Error: You must enter your full name</p>
     {/if}
@@ -100,11 +92,11 @@
 
   <div class="card__field">
     <label for="card-number" class="card__label">Card Number</label>
-    <input type="text" id="card-number" class="card__input" name="card-number" min="19" max="19" placeholder="e.g. 1234 5678 9123 0000" on:keydown={handleCardNumber} on:input={handleInput('cardNumber')} bind:value={cardNumber} required />
+    <input type="text" id="card-number" class={!isValidCardNumber || !isValidCardNumberFormat ? "card__input card__input--state-error" : "card__input"} name="card-number" min="19" max="19" placeholder="e.g. 1234 5678 9123 0000" on:input={handleInput('cardNumber')} bind:value={cardNumber} required />
     {#if !isValidCardNumber}
-      <p class="field__feedback field__feedback--state-error">Error: Card number cannot be empty</p> 
+      <p class="field__feedback field__feedback--state-error">Can't be blank</p> 
     {:else if !isValidCardNumberFormat}
-      <p class="field__feedback field__feedback--state-error">Error: Card number must be 16 digits</p>
+      <p class="field__feedback field__feedback--state-error">Wrong format, numbers only</p>
     {:else if !isRealCardNumberFormat}
       <p class="field__feedback field__feedback--state-warning">Warning: Not a real card number</p>
     {/if}
@@ -114,25 +106,25 @@
     <div class="card__field">
       <label for="card-expiration" class="card__label">Exp. Date (MM/YY)</label>
       <div class="card__field--display-row">
-        <input type="text" id="card-expiration-mo" class="card__input card__input--size-sm" on:keydown={handleCardNumberField(2)} on:input={handleInput('cardExpMo')} placeholder="MM" bind:value={cardExpMo} required />
-        <input type="text" id="card=expiration-yr" class="card__input card__input--size-sm" on:keydown={handleCardNumberField(2)} on:input={handleInput('cardExpYr')} placeholder="YY" bind:value={cardExpYr} required />
+        <input type="text" id="card-expiration-mo" class={!isValidExpMo || !isValidExpDate ? "card__input card__input--size-sm card__input--state-error" : "card__input card__input--size-sm"} on:keydown={handleCardNumberField(2)} on:input={handleInput('cardExpMo')} placeholder="MM" bind:value={cardExpMo} required />
+        <input type="text" id="card=expiration-yr" class={!isValidExpYr || !isValidExpDate ? "card__input card__input--size-sm card__input--state-error" : "card__input card__input--size-sm"} on:keydown={handleCardNumberField(2)} on:input={handleInput('cardExpYr')} placeholder="YY" bind:value={cardExpYr} required />
       </div>
       {#if !isValidExpMo}
-        <p class="field__feedback field__feedback--state-error">Error: Exp Month cannot be empty</p>
+        <p class="field__feedback field__feedback--state-error">Can't be blank</p>
       {:else if !isValidExpYr}
-        <p class="field__feedback field__feedback--state-error">Error: Exp Year cannot be empty</p>
+        <p class="field__feedback field__feedback--state-error">Can't be blank</p>
       {:else if !isValidExpDate}
-        <p class="field__feedback field__feedback--state-error">Error: Invalid expiration date</p>
+        <p class="field__feedback field__feedback--state-error">Invalid expiration date</p>
       {/if}
     </div>
     
     <div class="card__field">
       <label for="card-cvv" class="card__label">CVV</label>
-      <input type="number" id="card-cvv" class="card__input card__input--size-md" name="card-cvv" placeholder="e.g. 123" on:keydown={handleCardNumberField(4)} on:input={handleInput('cvv')} bind:value={cardCvv} required />
+      <input type="number" id="card-cvv" class={!isValidCardCvv || !isValidCardCvvFormat ? "card__input card__input--size-md card__input--state-error" : "card__input card__input--size-md"} name="card-cvv" placeholder="e.g. 123" on:keydown={handleCardNumberField(4)} on:input={handleInput('cvv')} bind:value={cardCvv} required />
       {#if !isValidCardCvv}
-        <p class="field__feedback field__feedback--state-error">Error: Cannot be empty</p>
+        <p class="field__feedback field__feedback--state-error">Can't be blank</p>
       {:else if !isValidCardCvvFormat}
-        <p class="field__feedback field__feedback--state-error">Error: Invalid CVV format</p>
+        <p class="field__feedback field__feedback--state-error">Invalid CVV format</p>
       {/if}
     </div>
   </div>
@@ -190,6 +182,10 @@
     min-height: 30px;
   }
 
+  .card__input:active, .card__input:focus {
+    outline: none;
+  }
+
   .card__input::placeholder {
     color:hsl(279, 6%, 55%);
   }
@@ -205,6 +201,10 @@
   .card__input--size-sm:last-child {
     margin-left: 8px;
     margin-right: 8px;
+  }
+
+  .card__input--state-error {
+    border: 1px solid hsl(0, 100%, 66%);
   }
 
   .card__submit {

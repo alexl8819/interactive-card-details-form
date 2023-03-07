@@ -49,13 +49,13 @@
   .app__container {
     display: flex;
     flex-direction: column;
-    width: 23.5rem;
+    min-width: 23.5rem;
   }
 
   @media screen and (min-width: 1023px) {
     .app__container {
       flex-direction: row;
-      width: 64rem;
+      max-width: 64rem;
     }
   }
 </style>

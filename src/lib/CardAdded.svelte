@@ -49,4 +49,14 @@
     border: none;
     width: 100%;
   }
+
+  @media screen and (min-width: 1023px) {
+    .card__complete {
+      width: 23.5rem;
+    }
+
+    .card__message {
+      margin-bottom: 50px;
+    }
+  }
 </style>
