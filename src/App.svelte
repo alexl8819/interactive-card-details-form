@@ -55,6 +55,7 @@
   @media screen and (min-width: 1023px) {
     .app__container {
       flex-direction: row;
+      min-height: 100vh;
       max-width: 64rem;
     }
   }

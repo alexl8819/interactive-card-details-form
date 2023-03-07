@@ -20,8 +20,8 @@
       <div>
         <p class="card__number">{cardNumber}</p>
         <div class="card__details">
-          <p>{cardholderName}</p>
-          <p>{cardExpMo}/{cardExpYr}</p>
+          <p class="card__name">{cardholderName}</p>
+          <p class="card__exp">{cardExpMo}/{cardExpYr}</p>
         </div>
       </div>
     </div>
@@ -61,6 +61,7 @@
     color: hsl(270, 3%, 87%);
     letter-spacing: 0.1em;
     text-transform: uppercase;
+    max-height: 30px;
   }
 
   .card__front {
@@ -107,10 +108,19 @@
     font-weight: 500;
   }
 
+  .card__name {
+    max-width: 150px;
+  }
+
   .card__cvv {
+    float: right;
     text-align: right;
     font-size: 0.6rem;
-    margin-top: -15px;
+    margin-top: -20px;
+  }
+
+  .card__name, .card__number, .card__exp, .card__cvv {
+    overflow: hidden;
   }
 
   @media screen and (min-width: 1023px) {
@@ -118,24 +128,26 @@
       background-image: url('../assets/images/bg-main-desktop.png');
       background-repeat: no-repeat;
       background-size: cover;
-      min-height: 100vh;
       width: 40%;
+      height: auto;
       flex-direction: column-reverse;
       justify-content: center;
       margin-right: 225px;
+      margin-bottom: 0;
     }
 
     .card__front {
       height: 200px;
       width: 326px;
       margin-top: 150px;
-      margin-right: -70px;
+      margin-right: -90px;
     }
 
     .card__back {
       height: 200px;
       width: 326px;
       margin-right: -150px;
+      align-items: end;
     }
 
     .card__logo {
@@ -156,6 +168,7 @@
       font-size: 0.875rem;
       margin-top: -45px;
       margin-right: 10px;
+      max-width: 100px;
     }
 
     .card__container--shift-all-right {
