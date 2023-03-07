@@ -10,18 +10,20 @@
   const CVVRegex = /^[0-9]{3,4}$/;
   
   function handleCardNumber (e) {
-    if (e.keyCode !== 37 && e.keyCode !== 39 && e.keyCode !== 8 && e.key === 'Tab' && e.key !== ' ' && (e.keyCode < 48 || e.keyCode > 57)) {
+    if (e.keyCode !== 37 && e.keyCode !== 39 && e.keyCode !== 8 && e.key !== ' ' && (e.keyCode < 48 || e.keyCode > 57)) {
       e.preventDefault();
-    } else if (e.target.value.length >= 19 && e.keyCode !== 37 && e.keyCode !== 39 && e.keyCode !== 8 && e.key === 'Tab' && e.keyCode !== ' ') {
+    } else if (e.target.value.length >= 19 && e.keyCode !== 37 && e.keyCode !== 39 && e.keyCode !== 8 && e.keyCode !== ' ') {
       e.preventDefault();
     }
   }
 
-  function handleCardCvv (e) {
-    if (e.keyCode !== 37 && e.keyCode !== 39 && e.keyCode !== 8 && e.keyCode !== ' ' && e.code.includes('Key')) {
+  function handleCardNumberField (limit = 4) {
+    return (e) => {
+      if (e.keyCode !== 37 && e.keyCode !== 39 && e.keyCode !== 8 && e.keyCode !== ' ' && e.code.includes('Key')) {
       e.preventDefault();
-    } else if (e.target.value.length >= 4 && e.keyCode !== 37 && e.keyCode !== 39 && e.keyCode !== 8 && e.keyCode !== ' ') {
-      e.preventDefault();
+      } else if (e.target.value.length >= limit && e.keyCode !== 37 && e.keyCode !== 39 && e.keyCode !== 8 && e.keyCode !== ' ') {
+        e.preventDefault();
+      }
     }
   }
 
@@ -40,7 +42,7 @@
         case 'cardExpYr':
           cardExpYrActivated = true;
           break;
-        case 'cardCvv':
+        case 'cvv':
           cardCvvActivated = true;
           break;
       }
@@ -112,8 +114,8 @@
     <div class="card__field">
       <label for="card-expiration" class="card__label">Exp. Date (MM/YY)</label>
       <div class="card__field--display-row">
-        <input type="text" id="card-expiration-mo" class="card__input card__input--size-sm" on:input={handleInput('cardExpMo')} placeholder="MM" bind:value={cardExpMo} required />
-        <input type="text" id="card=expiration-yr" class="card__input card__input--size-sm" on:input={handleInput('cardExpYr')} placeholder="YY" bind:value={cardExpYr} required />
+        <input type="text" id="card-expiration-mo" class="card__input card__input--size-sm" on:keydown={handleCardNumberField(2)} on:input={handleInput('cardExpMo')} placeholder="MM" bind:value={cardExpMo} required />
+        <input type="text" id="card=expiration-yr" class="card__input card__input--size-sm" on:keydown={handleCardNumberField(2)} on:input={handleInput('cardExpYr')} placeholder="YY" bind:value={cardExpYr} required />
       </div>
       {#if !isValidExpMo}
         <p class="field__feedback field__feedback--state-error">Error: Exp Month cannot be empty</p>
@@ -126,7 +128,7 @@
     
     <div class="card__field">
       <label for="card-cvv" class="card__label">CVV</label>
-      <input type="number" id="card-cvv" class="card__input card__input--size-md" name="card-cvv" placeholder="e.g. 123" on:keydown={handleCardCvv} on:input={handleInput('cvv')} bind:value={cardCvv} required />
+      <input type="number" id="card-cvv" class="card__input card__input--size-md" name="card-cvv" placeholder="e.g. 123" on:keydown={handleCardNumberField(4)} on:input={handleInput('cvv')} bind:value={cardCvv} required />
       {#if !isValidCardCvv}
         <p class="field__feedback field__feedback--state-error">Error: Cannot be empty</p>
       {:else if !isValidCardCvvFormat}
