@@ -190,6 +190,10 @@
     min-height: 30px;
   }
 
+  .card__input::placeholder {
+    color:hsl(279, 6%, 55%);
+  }
+
   .card__input--size-md {
     width: 150px;
   }
