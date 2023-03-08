@@ -182,8 +182,8 @@
     justify-content: space-between;
   }
 
-  .card__field--display-row > .card__label {
-    width: 100%;
+  .card__field--display-row > .card__field {
+    margin-bottom: 5px;
   }
 
   .card__input {
