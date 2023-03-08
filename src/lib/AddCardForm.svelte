@@ -80,7 +80,7 @@
 </script>
 
 <div class="card__form">
-  <h1 class="form__heading">Add your card</h1>
+  <h1 class="sr-only">Add your card</h1>
   <form on:submit|preventDefault={handleSubmit}>
     <div class="card__field">
       <label for="cardholder-name" class="card__label">Cardholder Name</label>
@@ -141,8 +141,15 @@
 </div>
 
 <style>
-  .form__heading {
-    display: none;
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
   }
 
   .card__form {
