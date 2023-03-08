@@ -2,12 +2,12 @@
   const completeImg = new URL('../assets/images/icon-complete.svg', import.meta.url).href
 </script>
 
-<div class="card__complete">
+<section class="card__complete">
   <img src={completeImg} alt="completed" />
   <h2 class="card__heading">Thank you!</h2>
   <p class="card__message">We've added your card details</p>
   <button type="button" class="card__finish">Continue</button>
-</div>
+</section>
 
 <style>
   .card__complete {
