@@ -71,9 +71,9 @@
   $: isValidExpDate = !cardExpMoActivated && !cardExpYrActivated || cardExpMoActivated && cardExpYrActivated && ExpDateRegex.test(`${cardExpMo}/${cardExpYr}`);
 
   let cardCvvActivated = false;
-  let cardCvv;
+  let cardCvv = '';
 
-  $: isValidCardCvv = !cardCvvActivated || cardCvvActivated && cardCvv > 0;
+  $: isValidCardCvv = !cardCvvActivated || cardCvvActivated && cardCvv.length;
   $: isValidCardCvvFormat = !cardCvvActivated || cardCvvActivated && CVVRegex.test(cardCvv);
 
   $: isValidCardEntry = cardholderNameActivated && isValidCardholderName && cardNumberActivated && isValidCardholderNameFormat && isValidCardNumber && isValidCardNumberFormat && cardExpMoActivated && cardExpYrActivated && isValidExpMo && isValidExpYr && isValidExpDate && cardCvvActivated && isValidCardCvv && isValidCardCvvFormat;
@@ -120,7 +120,7 @@
     
     <div class="card__field">
       <label for="card-cvv" class="card__label">CVV</label>
-      <input type="number" id="card-cvv" class={!isValidCardCvv || !isValidCardCvvFormat ? "card__input card__input--size-md card__input--state-error" : "card__input card__input--size-md"} name="card-cvv" placeholder="e.g. 123" on:keydown={handleCardNumberField(4)} on:input={handleInput('cvv')} bind:value={cardCvv} required />
+      <input type="text" id="card-cvv" class={!isValidCardCvv || !isValidCardCvvFormat ? "card__input card__input--size-md card__input--state-error" : "card__input card__input--size-md"} name="card-cvv" placeholder="e.g. 123" on:keydown={handleCardNumberField(4)} on:input={handleInput('cvv')} bind:value={cardCvv} required />
       {#if !isValidCardCvv}
         <p class="field__feedback field__feedback--state-error">Can't be blank</p>
       {:else if !isValidCardCvvFormat}
