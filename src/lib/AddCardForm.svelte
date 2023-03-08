@@ -104,10 +104,11 @@
 
   <div class="card__field card__field--display-row">
     <div class="card__field">
-      <label for="card-expiration" class="card__label">Exp. Date (MM/YY)</label>
+      <label for="card-expiration-mo" class="card__label">Exp. Date (MM/YY)</label>
+      <label for="card-expiration-yr" class="card__label--state-hidden">Exp. Date (MM/YY)</label>
       <div class="card__field--display-row">
-        <input type="text" id="card-expiration-mo" class={!isValidExpMo || !isValidExpDate ? "card__input card__input--size-sm card__input--state-error" : "card__input card__input--size-sm"} on:keydown={handleCardNumberField(2)} on:input={handleInput('cardExpMo')} placeholder="MM" bind:value={cardExpMo} required />
-        <input type="text" id="card=expiration-yr" class={!isValidExpYr || !isValidExpDate ? "card__input card__input--size-sm card__input--state-error" : "card__input card__input--size-sm"} on:keydown={handleCardNumberField(2)} on:input={handleInput('cardExpYr')} placeholder="YY" bind:value={cardExpYr} required />
+        <input type="text" id="card-expiration-mo" name="card-expiration-mo" class={!isValidExpMo || !isValidExpDate ? "card__input card__input--size-sm card__input--state-error" : "card__input card__input--size-sm"} on:keydown={handleCardNumberField(2)} on:input={handleInput('cardExpMo')} placeholder="MM" bind:value={cardExpMo} required />
+        <input type="text" id="card=expiration-yr" name="card-expiration-yr" class={!isValidExpYr || !isValidExpDate ? "card__input card__input--size-sm card__input--state-error" : "card__input card__input--size-sm"} on:keydown={handleCardNumberField(2)} on:input={handleInput('cardExpYr')} placeholder="YY" bind:value={cardExpYr} required />
       </div>
       {#if !isValidExpMo}
         <p class="field__feedback field__feedback--state-error">Can't be blank</p>
@@ -151,6 +152,10 @@
     letter-spacing: 0.1em;
     color: hsl(278, 68%, 11%); 
     text-transform: uppercase;
+  }
+
+  .card__label--state-hidden {
+    display: none;
   }
 
   .card__field {
