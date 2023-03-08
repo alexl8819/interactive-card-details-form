@@ -82,7 +82,7 @@
 <form class="card__form" on:submit|preventDefault={handleSubmit}>
   <div class="card__field">
     <label for="cardholder-name" class="card__label">Cardholder Name</label>
-    <input type="text" id="cardholder-name" class={!isValidCardholderName || !isValidCardholderNameFormat ? "card__input card__input--state-error" : "card__input"} name="cardholder-name" placeholder="e.g. Jane Appleseed" min="3" max="64" on:input={handleInput('cardholderName')} bind:value={cardholderName} aria-labelledby="cardholer-name" required />
+    <input type="text" id="cardholder-name" class={!isValidCardholderName || !isValidCardholderNameFormat ? "card__input card__input--state-error" : "card__input"} name="cardholder-name" placeholder="e.g. Jane Appleseed" min="3" max="64" on:input={handleInput('cardholderName')} bind:value={cardholderName} aria-labelledby="cardholder-name" required />
     {#if !isValidCardholderName}
       <p class="field__feedback field__feedback--state-error">Can't be blank</p>
     {:else if !isValidCardholderNameFormat}
@@ -92,7 +92,7 @@
 
   <div class="card__field">
     <label for="card-number" class="card__label">Card Number</label>
-    <input type="text" id="card-number" class={!isValidCardNumber || !isValidCardNumberFormat ? "card__input card__input--state-error" : "card__input"} name="card-number" min="19" max="19" placeholder="e.g. 1234 5678 9123 0000" on:input={handleInput('cardNumber')} bind:value={cardNumber} aria-labelledby="card-number" required />
+    <input type="text" id="card-number" name="card-number" class={!isValidCardNumber || !isValidCardNumberFormat ? "card__input card__input--state-error" : "card__input"} placeholder="e.g. 1234 5678 9123 0000" on:input={handleInput('cardNumber')} bind:value={cardNumber} aria-labelledby="card-number" required />
     {#if !isValidCardNumber}
       <p class="field__feedback field__feedback--state-error">Can't be blank</p> 
     {:else if !isValidCardNumberFormat}
@@ -111,7 +111,7 @@
         </div>
         <div class="card__field">
           <label for="card-expiration-yr" class="card__label--state-hidden">Exp. Date (MM/YY)</label>
-          <input type="text" id="card=expiration-yr" name="card-expiration-yr" class={!isValidExpYr || !isValidExpDate ? "card__input card__input--size-sm card__input--state-error" : "card__input card__input--size-sm"} on:keydown={handleCardNumberField(2)} on:input={handleInput('cardExpYr')} placeholder="YY" bind:value={cardExpYr} aria-labelledby="card-expiration-yr" required />
+          <input type="text" id="card-expiration-yr" name="card-expiration-yr" class={!isValidExpYr || !isValidExpDate ? "card__input card__input--size-sm card__input--state-error" : "card__input card__input--size-sm"} on:keydown={handleCardNumberField(2)} on:input={handleInput('cardExpYr')} placeholder="YY" bind:value={cardExpYr} aria-labelledby="card-expiration-yr" required />
         </div>
       </div>
       {#if !isValidExpMo}
