@@ -79,65 +79,72 @@
   $: isValidCardEntry = cardholderNameActivated && isValidCardholderName && cardNumberActivated && isValidCardholderNameFormat && isValidCardNumber && isValidCardNumberFormat && cardExpMoActivated && cardExpYrActivated && isValidExpMo && isValidExpYr && isValidExpDate && cardCvvActivated && isValidCardCvv && isValidCardCvvFormat;
 </script>
 
-<form class="card__form" on:submit|preventDefault={handleSubmit}>
-  <div class="card__field">
-    <label for="cardholder-name" class="card__label">Cardholder Name</label>
-    <input type="text" id="cardholder-name" class={!isValidCardholderName || !isValidCardholderNameFormat ? "card__input card__input--state-error" : "card__input"} name="cardholder-name" placeholder="e.g. Jane Appleseed" min="3" max="64" on:input={handleInput('cardholderName')} bind:value={cardholderName} aria-labelledby="cardholder-name" required />
-    {#if !isValidCardholderName}
-      <p class="field__feedback field__feedback--state-error">Can't be blank</p>
-    {:else if !isValidCardholderNameFormat}
-      <p class="field__feedback field__feedback--state-error">Error: You must enter your full name</p>
-    {/if}
-  </div>
-
-  <div class="card__field">
-    <label for="card-number" class="card__label">Card Number</label>
-    <input type="text" id="card-number" name="card-number" class={!isValidCardNumber || !isValidCardNumberFormat ? "card__input card__input--state-error" : "card__input"} placeholder="e.g. 1234 5678 9123 0000" on:input={handleInput('cardNumber')} bind:value={cardNumber} aria-labelledby="card-number" required />
-    {#if !isValidCardNumber}
-      <p class="field__feedback field__feedback--state-error">Can't be blank</p> 
-    {:else if !isValidCardNumberFormat}
-      <p class="field__feedback field__feedback--state-error">Wrong format, numbers only</p>
-    {:else if !isRealCardNumberFormat}
-      <p class="field__feedback field__feedback--state-warning">Warning: Not a real card number</p>
-    {/if}
-  </div>
-
-  <div class="card__field card__field--display-row">
+<div class="card__form">
+  <h1 class="form__heading">Add your card</h1>
+  <form on:submit|preventDefault={handleSubmit}>
     <div class="card__field">
-      <label for="card-expiration-mo" class="card__label">Exp. Date (MM/YY)</label>
-      <div class="card__field--display-row">
-        <div class="card__field">
-          <input type="text" id="card-expiration-mo" name="card-expiration-mo" class={!isValidExpMo || !isValidExpDate ? "card__input card__input--size-sm card__input--state-error" : "card__input card__input--size-sm"} on:keydown={handleCardNumberField(2)} on:input={handleInput('cardExpMo')} placeholder="MM" bind:value={cardExpMo} aria-labelledby="card-expiration-mo" required />
+      <label for="cardholder-name" class="card__label">Cardholder Name</label>
+      <input type="text" id="cardholder-name" class={!isValidCardholderName || !isValidCardholderNameFormat ? "card__input card__input--state-error" : "card__input"} name="cardholder-name" placeholder="e.g. Jane Appleseed" min="3" max="64" on:input={handleInput('cardholderName')} bind:value={cardholderName} aria-labelledby="cardholder-name" required />
+      {#if !isValidCardholderName}
+        <p class="field__feedback field__feedback--state-error">Can't be blank</p>
+      {:else if !isValidCardholderNameFormat}
+        <p class="field__feedback field__feedback--state-error">Error: You must enter your full name</p>
+      {/if}
+    </div>
+
+    <div class="card__field">
+      <label for="card-number" class="card__label">Card Number</label>
+      <input type="text" id="card-number" name="card-number" class={!isValidCardNumber || !isValidCardNumberFormat ? "card__input card__input--state-error" : "card__input"} placeholder="e.g. 1234 5678 9123 0000" on:input={handleInput('cardNumber')} bind:value={cardNumber} aria-labelledby="card-number" required />
+      {#if !isValidCardNumber}
+        <p class="field__feedback field__feedback--state-error">Can't be blank</p> 
+      {:else if !isValidCardNumberFormat}
+        <p class="field__feedback field__feedback--state-error">Wrong format, numbers only</p>
+      {:else if !isRealCardNumberFormat}
+        <p class="field__feedback field__feedback--state-warning">Warning: Not a real card number</p>
+      {/if}
+    </div>
+
+    <div class="card__field card__field--display-row">
+      <div class="card__field">
+        <label for="card-expiration-mo" class="card__label">Exp. Date (MM/YY)</label>
+        <div class="card__field--display-row">
+          <div class="card__field">
+            <input type="text" id="card-expiration-mo" name="card-expiration-mo" class={!isValidExpMo || !isValidExpDate ? "card__input card__input--size-sm card__input--state-error" : "card__input card__input--size-sm"} on:keydown={handleCardNumberField(2)} on:input={handleInput('cardExpMo')} placeholder="MM" bind:value={cardExpMo} aria-labelledby="card-expiration-mo" required />
+          </div>
+          <div class="card__field">
+            <label for="card-expiration-yr" class="card__label--state-hidden">Exp. Date (MM/YY)</label>
+            <input type="text" id="card-expiration-yr" name="card-expiration-yr" class={!isValidExpYr || !isValidExpDate ? "card__input card__input--size-sm card__input--state-error" : "card__input card__input--size-sm"} on:keydown={handleCardNumberField(2)} on:input={handleInput('cardExpYr')} placeholder="YY" bind:value={cardExpYr} aria-labelledby="card-expiration-yr" required />
+          </div>
         </div>
-        <div class="card__field">
-          <label for="card-expiration-yr" class="card__label--state-hidden">Exp. Date (MM/YY)</label>
-          <input type="text" id="card-expiration-yr" name="card-expiration-yr" class={!isValidExpYr || !isValidExpDate ? "card__input card__input--size-sm card__input--state-error" : "card__input card__input--size-sm"} on:keydown={handleCardNumberField(2)} on:input={handleInput('cardExpYr')} placeholder="YY" bind:value={cardExpYr} aria-labelledby="card-expiration-yr" required />
-        </div>
+        {#if !isValidExpMo}
+          <p class="field__feedback field__feedback--state-error">Can't be blank</p>
+        {:else if !isValidExpYr}
+          <p class="field__feedback field__feedback--state-error">Can't be blank</p>
+        {:else if !isValidExpDate}
+          <p class="field__feedback field__feedback--state-error">Invalid expiration date</p>
+        {/if}
       </div>
-      {#if !isValidExpMo}
-        <p class="field__feedback field__feedback--state-error">Can't be blank</p>
-      {:else if !isValidExpYr}
-        <p class="field__feedback field__feedback--state-error">Can't be blank</p>
-      {:else if !isValidExpDate}
-        <p class="field__feedback field__feedback--state-error">Invalid expiration date</p>
-      {/if}
-    </div>
     
-    <div class="card__field">
-      <label for="card-cvv" class="card__label">CVV</label>
-      <input type="text" id="card-cvv" class={!isValidCardCvv || !isValidCardCvvFormat ? "card__input card__input--size-md card__input--state-error" : "card__input card__input--size-md"} name="card-cvv" placeholder="e.g. 123" on:keydown={handleCardNumberField(4)} on:input={handleInput('cvv')} bind:value={cardCvv} aria-labelledby="card-cvv" required />
-      {#if !isValidCardCvv}
-        <p class="field__feedback field__feedback--state-error">Can't be blank</p>
-      {:else if !isValidCardCvvFormat}
-        <p class="field__feedback field__feedback--state-error">Invalid CVV format</p>
-      {/if}
+      <div class="card__field">
+        <label for="card-cvv" class="card__label">CVV</label>
+        <input type="text" id="card-cvv" class={!isValidCardCvv || !isValidCardCvvFormat ? "card__input card__input--size-md card__input--state-error" : "card__input card__input--size-md"} name="card-cvv" placeholder="e.g. 123" on:keydown={handleCardNumberField(4)} on:input={handleInput('cvv')} bind:value={cardCvv} aria-labelledby="card-cvv" required />
+        {#if !isValidCardCvv}
+          <p class="field__feedback field__feedback--state-error">Can't be blank</p>
+        {:else if !isValidCardCvvFormat}
+          <p class="field__feedback field__feedback--state-error">Invalid CVV format</p>
+        {/if}
+      </div>
     </div>
-  </div>
 
-  <button type="submit" class="card__submit" disabled={!isValidCardEntry}>Confirm</button>
-</form>
+    <button type="submit" class="card__submit" disabled={!isValidCardEntry}>Confirm</button>
+  </form>
+</div>
 
 <style>
+  .form__heading {
+    display: none;
+  }
+
   .card__form {
     display: flex;
     flex-direction: column;
@@ -229,6 +236,7 @@
     padding-bottom: 10px;
     border-radius: 8px;
     border: none;
+    width: 100%;
   }
 
   .card__submit:disabled {

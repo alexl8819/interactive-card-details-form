@@ -141,7 +141,7 @@
     .card__front {
       height: 200px;
       width: 326px;
-      margin-top: 150px;
+      margin-top: 125px;
       margin-right: -90px;
     }
 
