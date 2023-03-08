@@ -125,7 +125,7 @@
     line-height: 1.4rem;
   }
 
-  @media screen and (min-width: 1023px) {
+  @media screen and (min-width: 767px) {
     .card__preview {
       background-image: url('../assets/images/bg-main-desktop.png');
       background-repeat: no-repeat;

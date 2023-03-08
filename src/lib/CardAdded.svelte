@@ -50,7 +50,7 @@
     width: 100%;
   }
 
-  @media screen and (min-width: 1023px) {
+  @media screen and (min-width: 767px) {
     .card__complete {
       width: 23.5rem;
     }
