@@ -11,6 +11,7 @@ This is a solution to the [Interactive card details form challenge on Frontend M
 - [My process](#my-process)
   - [Built with](#built-with)
   - [What I learned](#what-i-learned)
+  - [Continued Development](#continued-development)
 - [Author](#author)
 
 ## Overview
@@ -49,6 +50,10 @@ Users should be able to:
 ### What I learned
 
 This is the first time using Svelte on a project. It felt a lot like Vue except the reactivity is implicit versus Vue requiring you to manually declare variables as reactive. The documentation was pretty straight forward and easy to figure out. I am genuinely impressed by the build size, it seems much faster and smaller than React and Vue.
+
+### Continued development
+
+This project is heavily focusing on accessibility as it seems to be a weak area of mine needing improvement. I made sure aria-labels were added to form controls and included a hidden heading while referencing the [web accessibility evaluation tool](https://wave.webaim.org/) to ensure no accessibility errors.
 
 ## Author
 
