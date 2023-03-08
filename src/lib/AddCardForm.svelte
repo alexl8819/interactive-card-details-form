@@ -105,10 +105,14 @@
   <div class="card__field card__field--display-row">
     <div class="card__field">
       <label for="card-expiration-mo" class="card__label">Exp. Date (MM/YY)</label>
-      <label for="card-expiration-yr" class="card__label--state-hidden">Exp. Date (MM/YY)</label>
       <div class="card__field--display-row">
-        <input type="text" id="card-expiration-mo" name="card-expiration-mo" class={!isValidExpMo || !isValidExpDate ? "card__input card__input--size-sm card__input--state-error" : "card__input card__input--size-sm"} on:keydown={handleCardNumberField(2)} on:input={handleInput('cardExpMo')} placeholder="MM" bind:value={cardExpMo} required />
-        <input type="text" id="card=expiration-yr" name="card-expiration-yr" class={!isValidExpYr || !isValidExpDate ? "card__input card__input--size-sm card__input--state-error" : "card__input card__input--size-sm"} on:keydown={handleCardNumberField(2)} on:input={handleInput('cardExpYr')} placeholder="YY" bind:value={cardExpYr} required />
+        <div class="card__field">
+          <input type="text" id="card-expiration-mo" name="card-expiration-mo" class={!isValidExpMo || !isValidExpDate ? "card__input card__input--size-sm card__input--state-error" : "card__input card__input--size-sm"} on:keydown={handleCardNumberField(2)} on:input={handleInput('cardExpMo')} placeholder="MM" bind:value={cardExpMo} required />
+        </div>
+        <div class="card__field">
+          <label for="card-expiration-yr" class="card__label--state-hidden">Exp. Date (MM/YY)</label>
+          <input type="text" id="card=expiration-yr" name="card-expiration-yr" class={!isValidExpYr || !isValidExpDate ? "card__input card__input--size-sm card__input--state-error" : "card__input card__input--size-sm"} on:keydown={handleCardNumberField(2)} on:input={handleInput('cardExpYr')} placeholder="YY" bind:value={cardExpYr} required />
+        </div>
       </div>
       {#if !isValidExpMo}
         <p class="field__feedback field__feedback--state-error">Can't be blank</p>
@@ -178,6 +182,10 @@
     justify-content: space-between;
   }
 
+  .card__field--display-row > .card__label {
+    width: 100%;
+  }
+
   .card__input {
     padding-top: 10px;
     padding-bottom: 10px;
@@ -205,7 +213,7 @@
   }
 
   .card__input--size-sm:last-child {
-    margin-left: 8px;
+    /*margin-left: 8px;*/
     margin-right: 8px;
   }
 
