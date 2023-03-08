@@ -50,6 +50,8 @@
     display: flex;
     flex-direction: column;
     min-width: 23.5rem;
+    font-family: var(--font-family);
+    line-height: var(--line-height);
   }
 
   @media screen and (min-width: 767px) {
