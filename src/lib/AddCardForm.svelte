@@ -12,7 +12,7 @@
   function handleCardNumberField (limit = 4) {
     return (e) => {
       if (e.keyCode !== 37 && e.keyCode !== 39 && e.keyCode !== 8 && e.keyCode !== ' ' && e.code.includes('Key')) {
-      e.preventDefault();
+        e.preventDefault();
       } else if (e.target.value.length >= limit && e.keyCode !== 37 && e.keyCode !== 39 && e.keyCode !== 8 && e.keyCode !== ' ') {
         e.preventDefault();
       }
@@ -20,7 +20,7 @@
   }
 
   function handleInput (field) {
-    return function (e) {
+    return function ({ target }) {
       switch (field) {
         case 'cardholderName':
           cardholderNameActivated = true;
@@ -39,7 +39,7 @@
           break;
       }
       dispatch('update', {
-        [field]: e.target.value
+        [field]: target.value
       })
     };
   }
