@@ -84,7 +84,7 @@
   <form on:submit|preventDefault={handleSubmit}>
     <div class="card__field">
       <label for="cardholder-name" class="card__label">Cardholder Name</label>
-      <input type="text" id="cardholder-name" class={!isValidCardholderName || !isValidCardholderNameFormat ? "card__input card__input--state-error" : "card__input"} name="cardholder-name" placeholder="e.g. Jane Appleseed" min="3" max="64" on:input={handleInput('cardholderName')} bind:value={cardholderName} aria-labelledby="cardholder-name" required />
+      <input type="text" id="cardholder-name" class={!isValidCardholderName || !isValidCardholderNameFormat ? "card__input card__input--state-error" : "card__input"} name="cardholder-name" placeholder="e.g. Jane Appleseed" on:input={handleInput('cardholderName')} bind:value={cardholderName} aria-labelledby="cardholder-name" required />
       {#if !isValidCardholderName}
         <p class="field__feedback field__feedback--state-error">Can't be blank</p>
       {:else if !isValidCardholderNameFormat}
