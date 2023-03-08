@@ -61,7 +61,7 @@
     color: hsl(270, 3%, 87%);
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    max-height: 30px;
+    max-height: 20px;
   }
 
   .card__front {
@@ -110,6 +110,7 @@
 
   .card__name {
     max-width: 150px;
+    word-break: break-all;
   }
 
   .card__cvv {
@@ -121,6 +122,7 @@
 
   .card__name, .card__number, .card__exp, .card__cvv {
     overflow: hidden;
+    line-height: 1.4rem;
   }
 
   @media screen and (min-width: 1023px) {
