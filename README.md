@@ -46,7 +46,6 @@ Users should be able to:
 - [Svelte](https://svelte.dev/) - JS Framework
 - [Vite](https://vitejs.dev/) - Vite Bundler
 
-
 ### What I learned
 
 This is the first time using Svelte on a project. It felt a lot like Vue except the reactivity is implicit versus Vue requiring you to manually declare variables as reactive. The documentation was pretty straight forward and easy to figure out. I am genuinely impressed by the build size, it seems much faster and smaller than React and Vue.
