@@ -1,5 +1,5 @@
 <script>
-  const completeImg = new URL('../assets/images/icon-complete.svg', import.meta.url).href
+  import completeImg from '../assets/images/icon-complete.svg';
 </script>
 
 <section class="card__complete">

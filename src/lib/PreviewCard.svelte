@@ -5,7 +5,7 @@
   export let cardExpYr = '00';
   export let cardCvv = '000';
 
-  const cardLogo = new URL('../assets/images/card-logo.svg', import.meta.url).href;
+  import cardLogo from '../assets/images/card-logo.svg';
 </script>
 
 <div class="card__preview">
