@@ -1,4 +1,4 @@
-import { screen, render, fireEvent, within } from '@testing-library/svelte';
+import { screen, render, fireEvent } from '@testing-library/svelte';
 import App from './App';
 
 describe('App', () => {

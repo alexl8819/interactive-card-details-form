@@ -3,15 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Validate and add a new card to your account" />
     <link rel="icon" type="image/png" sizes="32x32" href="./src/assets/images/favicon-32x32.png">
 
     <title>Frontend Mentor | Interactive card details form</title>
     <link rel="stylesheet" href="./node_modules/@fontsource/space-grotesk/500.css">
-    <link rel="stylesheet" href="./node_modules/modern-css-reset/dist/reset.css">
+    <link rel="stylesheet" href="./node_modules/modern-normalize/modern-normalize.css">
     <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
     <style>
       .attribution { font-size: 11px; text-align: center; }
       .attribution a { color: hsl(228, 45%, 44%); }
+      .attribution__link { font-weight: bold; }
+      .attribution__author { text-transform: underline; }
     </style>
   </head>
   <body>
@@ -21,8 +24,8 @@
       </noscript>
     </main>
     <footer class="attribution">
-      Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
-      Coded by <a href="#">slightlyfunctional</a>.
+      Challenge by <a class="attribution__link" href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
+      Coded by <a class="attribution__author" href="#">alexl8819</a>.
     </footer>
     <script type="module" src="/src/main.js"></script>
   </body>

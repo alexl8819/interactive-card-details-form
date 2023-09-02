@@ -12,7 +12,6 @@ This is a solution to the [Interactive card details form challenge on Frontend M
   - [Built with](#built-with)
   - [What I learned](#what-i-learned)
   - [Continued Development](#continued-development)
-- [Author](#author)
 
 ## Overview
 
@@ -29,11 +28,12 @@ Users should be able to:
 
 ### Screenshot
 
-![Screenshot](./screenshot.png)
+![Mobile Screenshot](./screenshots/mobile.png)
+![Desktop Screenshot](./screenshots/desktop.png)
 
 ### Links
 
-- Live Site URL: [Interactive Card Details Form](https://slightlyfunctional.gitlab.io/interactive-card-details-form/)
+- Live Site URL: [Interactive Card Details Form](https://alexl8819.github.io/interactive-card-details-form/)
 
 ## My process
 
@@ -53,8 +53,3 @@ This is the first time using Svelte on a project. It felt a lot like Vue except 
 ### Continued development
 
 This project is heavily focusing on accessibility as it seems to be a weak area of mine needing improvement. I made sure aria-labels were added to form controls and included a hidden heading while referencing the [web accessibility evaluation tool](https://wave.webaim.org/) to ensure no accessibility errors.
-
-## Author
-
-- Website - [slightlyfunctional.com](https://slightlyfunctional.com)
-- Frontend Mentor - [@slightlyfunctional](https://www.frontendmentor.io/profile/slightlyfunctional)

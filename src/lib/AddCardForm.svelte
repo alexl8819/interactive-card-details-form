@@ -18,9 +18,9 @@
 
   function handleCardNumberField (limit = 4) {
     return (e) => {
-      if (e.keyCode !== 37 && e.keyCode !== 39 && e.keyCode !== 8 && e.keyCode !== ' ' && e.code.includes('Key')) {
+      if (e.keyCode !== 37 && e.keyCode !== 39 && e.keyCode !== 8 && e.keyCode !== ' ' && e.keyCode !== 9 && e.code.includes('Key')) {
         e.preventDefault();
-      } else if (e.target.value.length >= limit && e.keyCode !== 37 && e.keyCode !== 39 && e.keyCode !== 8 && e.keyCode !== ' ') {
+      } else if (e.target.value.length >= limit && e.keyCode !== 37 && e.keyCode !== 39 && e.keyCode !== 8 && e.keyCode !== 9 && e.keyCode !== ' ') {
         e.preventDefault();
       }
     }
@@ -83,10 +83,10 @@
 
 <div class="card__form">
   <h1 class="sr-only">Add your card</h1>
-  <form on:submit|preventDefault={(e) => dispatch('confirm')}>
+  <form on:submit|preventDefault={() => dispatch('confirm')}>
     <div class="card__field">
       <label for="cardholder-name" class="card__label">Cardholder Name</label>
-      <input type="text" id="cardholder-name" class={!isValidCardholderName || !isValidCardholderNameFormat ? "card__input card__input--state-error" : "card__input"} name="cardholder-name" placeholder="e.g. Jane Appleseed" minlength="3" maxlength="32" on:input={handleInput('cardholderName')} bind:value={cardholderName} aria-labelledby="cardholder-name" required />
+      <input type="text" id="cardholder-name" class={!isValidCardholderName || !isValidCardholderNameFormat ? "card__input card__input--state-error" : "card__input"} name="cardholder-name" placeholder="e.g. Jane Appleseed" minlength="3" maxlength="18" on:input={handleInput('cardholderName')} bind:value={cardholderName} aria-labelledby="cardholder-name" required />
       <p class={ !isValidCardholderName || !isValidCardholderNameFormat ? "field__feedback--state-error" : "field__feedback"}>{ !isValidCardholderName ? 'Can\'t be blank' : 'You must enter your full name' }</p>
     </div>
 
@@ -166,14 +166,6 @@
     margin-bottom: 5px;
   }
 
-  .card__field input[type=number]::-webkit-inner-spin-button, 
-  .card__field input[type=number]::-webkit-outer-spin-button,
-  .card__field input[type=number] { 
-    -webkit-appearance: none;
-    -moz-appearance: textfield; 
-    margin: 0;
-  }
-
   .card__field--display-row {
     display: flex;
     flex-direction: row;
@@ -243,8 +235,8 @@
     visibility: visible;
   }
 
-  .field__feedback--state-warning {
+  /*.field__feedback--state-warning {
     color: #AC4FC6;
     visibility: visible;
-  }
+  }*/
 </style>

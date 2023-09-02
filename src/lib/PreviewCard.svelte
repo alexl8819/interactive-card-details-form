@@ -117,11 +117,11 @@
     float: right;
     text-align: right;
     font-size: 0.6rem;
-    margin-top: -20px;
+    margin-top: -15px;
   }
 
   .card__name, .card__number, .card__exp, .card__cvv {
-    overflow: hidden;
+    /*overflow: hidden;*/
     line-height: 1.4rem;
   }
 
@@ -168,7 +168,7 @@
 
     .card__cvv {
       font-size: 0.875rem;
-      margin-top: -45px;
+      margin-top: -32px;
       margin-right: 10px;
       max-width: 100px;
     }
